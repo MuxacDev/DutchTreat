@@ -2,11 +2,13 @@
   "profiles": {
     "DutchTreat": {
       "commandName": "Project",
+      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "applicationUrl": "http://localhost:5000;https://localhost:5001",
       "dotnetRunMessages": true,
-      "applicationUrl": ""
+      "nativeDebugging": false
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -20,7 +22,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:6497",
+      "applicationUrl": "http://localhost:6789",
       "sslPort": 0
     }
   }

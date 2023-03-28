@@ -8,10 +8,15 @@
   "Logging": {
     "LogLevel": {
       "Default": "Information",
-      "Microsoft": "Warning"
-
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
     }
   },
-  "Urls": "http://localhost:8888;https://localhost:9999"
+  "Tokens": {
+    "Key": ";dsfgdfg;xd;gxd;g;a;ser;hfg",
+    "Issuer": "http://localhost:5000",
+    "Audience": "http://localhost:5000"
+  }
+
 
 }

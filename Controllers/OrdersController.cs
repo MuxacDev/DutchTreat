@@ -2,25 +2,32 @@
 using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace DutchTreat.Controllers
 {
     [Route("api/[Controller]")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
     public class OrdersController : Controller
     {
         private readonly IDutchRepository repository;
         private readonly ILogger<OrdersController> logger;
         private readonly IMapper mapper;
+        private readonly UserManager<StoreUser> userManager;
 
         public OrdersController(IDutchRepository repository,
             ILogger<OrdersController> logger,
-            IMapper mapper)
+            IMapper mapper,
+            UserManager<StoreUser> userManager)
         {
             this.repository = repository;
             this.logger = logger;
             this.mapper = mapper;//соответствие между моделью и вьюмоделью
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -28,7 +35,9 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var result = repository.GetAllOrders(includeItems);
+                var username = User.Identity.Name;
+
+                var result = repository.GetAllOrdersByUser(username, includeItems);
                 return Ok(mapper.Map<IEnumerable<Order>,IEnumerable<OrderViewModel>>(result));
             }
             catch (Exception ex) 
@@ -43,7 +52,7 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                var order = repository.GetOrderById(id);
+                var order = repository.GetOrderById(User.Identity.Name,id);
                 if(order != null) return Ok(mapper.Map<Order,OrderViewModel>(order));
                 else return NotFound();
             }
@@ -55,7 +64,7 @@ namespace DutchTreat.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]OrderViewModel model)
+        public async Task<IActionResult> Post([FromBody]OrderViewModel model)
         {
             //add it to the db
             try
@@ -75,6 +84,10 @@ namespace DutchTreat.Controllers
                     {
                         newOrder.OrderDate = DateTime.Now;
                     }
+
+                    //запись для конкретного пользователя
+                    var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                    newOrder.User = currentUser;
 
                     repository.AddEntity(newOrder);
                     if (repository.SaveAll())
