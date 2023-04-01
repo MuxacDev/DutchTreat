@@ -19,7 +19,6 @@ namespace DutchTreat
 			IConfiguration config = builder.Configuration;
 			Console.WriteLine();
 
-
             var services = builder.Services;			
 			
 			

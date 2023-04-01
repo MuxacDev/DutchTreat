@@ -14,3 +14,17 @@ dotnet run
 dotnet ef migrations add Identity
 dotnet ef database drop
 dotnet run /seed
+
+--angular--
+
+node --version
+npm --version
+npm install @angular/cli -g
+npm uninstall @angular/cli -g npm cache clean --force 
+ng version
+ng new help
+ng new client --skip-git --skip-tests --minimal --defaults
+
+cd /d e:
+cd E:\source\repos\aspnet\DutchTreat\client
+ng build --output-hashing=none --watch
