@@ -28,3 +28,5 @@ ng new client --skip-git --skip-tests --minimal --defaults
 cd /d e:
 cd E:\source\repos\aspnet\DutchTreat\client
 ng build --output-hashing=none --watch
+
+json2ts.com
