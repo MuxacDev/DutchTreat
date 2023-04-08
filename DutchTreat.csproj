@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifier>win10-x64,linux-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,5 +50,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target Name="MyPublishScripts" BeforeTargets="BeforePublish">
+    <Exec Command="npm install"/>
+    <Exec Command="gulp"/>
+    <Exec Command="npm install" WorkingDirectory=".\\client"/>
+    <Exec Command="ng build --configuration=production" WorkingDirectory=".\\client"/>
+  </Target>
 
 </Project>
