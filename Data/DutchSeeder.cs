@@ -21,15 +21,19 @@ namespace DutchTreat.Data
         {
             ctx.Database.EnsureCreated();
 
-            StoreUser user = await userManager.FindByEmailAsync("shawn@dutchtreat.com");
+            StoreUser user = await userManager.FindByEmailAsync(/*"shawn@dutchtreat.com"*/"admin@email");
             if(user == null)            {
 
                 user = new StoreUser()
                 {
-                    FirstName="Shawn",
+                    /*FirstName="Shawn",
                     LastName="Wildermuth",
                     Email="shawn@dutchtreat.com",
-                    UserName= "shawn@dutchtreat.com"
+                    UserName= "shawn@dutchtreat.com"*/
+                    FirstName = "admin",
+                    LastName = "admin",
+                    Email = "admin@email",
+                    UserName = "admin@email"
                 };
 
                 var result = await userManager.CreateAsync(user,"P@ssw0rd!");
